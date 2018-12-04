@@ -1,0 +1,16 @@
+Sign Up - Approval
+
+Car Dashbboard
+	- model
+	- plate no
+	- capacity
+	- brand
+
+Make reservation details first
+	- date
+	- time
+	-> Car Selection
+	-> Driver Selection
+
+- Closing ticket of client
+	- 

@@ -1,0 +1,32 @@
+deny from all
+
+# Don't allow any pages to be framed - Defends against CSRF
+Header set X-Frame-Options DENY
+
+# Turn on IE8-IE9 XSS prevention tools
+Header set X-XSS-Protection "1; mode=block"
+
+Header set X-Content-Security-Policy "allow 'self';"
+Header set X-Content-Type-Options "nosniff"
+Header set Content-Security-Policy "default-src 'self' 'unsafe-inline'; img-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+Header merge Cache-Control no-cache env=CGI
+Header merge Cache-Control no-cache env=NO_CACHE
+Header merge Cache-Control no-store env=NO_STORE
+
+
+php_value session.cookie_httponly 1
+php_value session.cookie_secure 1
+
+AuthName “restrict all methods except”
+AuthType Basic
+#AuthUserFile /usr/local/etc/httpd/users
+< LimitExcept  >
+require group staff
+< /LimitExcept >	
+
+
+<IfModule mod_php5.c>
+    #Session timeout
+    php_value session.cookie_lifetime 1200
+    php_value session.gc_maxlifetime 1200
+</IfModule>

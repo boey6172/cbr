@@ -1,0 +1,10 @@
+diff a/protected/models/LoginForm.php b/protected/models/LoginForm.php	(rejected hunks)
+@@ -27,8 +27,6 @@
+ 			array('rememberMe', 'boolean'),
+ 			// password needs to be authenticated
+ 			array('password', 'authenticate'),
+-			//for Captcha
+-			array('verifyCode', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements(), 'on' => 'withCaptcha'),
+ 		);
+ 	}
+ 
