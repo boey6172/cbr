@@ -182,7 +182,7 @@ class Reservation extends CActiveRecord
         $criteria->compare('reservation_no',$this->reservation_no,true);
         $criteria->compare('car',$this->car);
         $criteria->compare('driver',$this->driver);
-        $criteria->compare('reserved_date',$date,true);
+        $criteria->compare('reserved_date',$this->reserved_date,true);
         $criteria->compare('arrival_date',$this->arrival_date,true);
         $criteria->compare('hq_arrival_date',$this->hq_arrival_date,true);
         $criteria->compare('pick_up_location',$this->pick_up_location,true);
@@ -199,6 +199,7 @@ class Reservation extends CActiveRecord
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
+            'pagination'=>false,
         ));
     }
 

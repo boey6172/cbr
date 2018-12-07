@@ -43,10 +43,22 @@ class AdminController extends Controller
 	public function actionIndex()
 	{
 		$vm = (object) array();
+		$retVal = 'error';
+		$retMessage = 'Error';
 		$vm->reservation = new Reservation('search');
-		$date = date("Y-m-d");
+		//$date = date("Y-m-d");
+		// $date=null;
+		if(isset($_POST['Reservation']))
+		{
+			$vm->reservation->attributes = $_POST['Reservation'];
+		}
+		// else
+		// {
+		// 	$vm->reservation->reserved_date = $date;
+		// }
+
 		$vm->menu = new AdminMenu('search');
-	
+		
 		$this->render('index', array(
 			'vm' => $vm,
 		));
@@ -332,6 +344,7 @@ class AdminController extends Controller
 		$retVal = "";
 		$retMessage = "";
 		$vm = (object) array();
+
 		$vm->reservation = new Reservation('search');
 		$vm->tracking = new TrackingLog('search');
 		$vm->reservation->reservation_no = $id;

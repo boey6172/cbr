@@ -44,7 +44,45 @@
 					</div>
 				</div>
 				<div class="row well">
-				<legend><span class="fa fa-home"></span> <b>Today's Reservations</b></legend>
+				<legend><span class="fa fa-home"></span> <b>Reservations</b></legend>
+
+					<?php /** @var TbActiveForm $form */
+					$form = $this->beginWidget(
+						'booster.widgets.TbActiveForm',
+						array(
+							'id' => 'formReservation',
+							'type' => 'horizontal',
+						)
+					);
+					?>
+				    <div class="row">	
+					    <div class="col-md-5">
+					            
+					        <?=$this::datePickerAlldays('date1', 'YYYY-M-DD', $form->textField( $vm->reservation, 'reserved_date', ['class'=>'form-control'])); ?>
+					    </div>
+						<div class="col-md-3">
+							<?php
+								$this->widget(
+									'booster.widgets.TbButton',
+									array(
+										// 'buttonType' => 'submit',
+										'label' => 'Submit',
+										'context' => 'primary',
+										'htmlOptions' => array(
+											'class' => 'reservation_search_btn col-md-12 ',
+											'style' => '
+												display: none, 
+											',
+										),
+									)
+								);
+							?>
+						</div>
+
+					</div>
+					</br>	
+
+					<?php $this->endWidget(); ?>
 					<div class="col-md-12 ">
 						<?php
 							$this->widget(
@@ -60,7 +98,7 @@
 												'vm' => $vm,
 											), true),
 										),		
-										array(
+										/*array(
 											'active' => false,
 											'label' => 'In-Transit',
 											'icon' => 'fa fa-car fa-lg',
@@ -91,7 +129,7 @@
 											'content' => $this->renderPartial('grids/cancelledReservation', array(
 												'vm' => $vm,
 											), true),
-										),	
+										),	*/
 										
 										
 								)
@@ -99,7 +137,7 @@
 						?>
 					</div>
 				</div>
-				<div class="row well">
+				<!--<div class="row well">
 				<legend><span class="fa fa-home"></span> <b>All Reservations</b></legend>
 					<div class="col-md-12 ">
 						<?php
@@ -118,7 +156,7 @@
 											'content' => 'ongoing updates',
 											
 										),		
-										array(
+										/*array(
 											'active' => false,
 											'label' => 'In-Transit',
 											'icon' => 'fa fa-car fa-lg',
@@ -153,14 +191,14 @@
 											// 	'vm' => $vm,
 											// ), true),
 											'content' => 'ongoing updates',
-										),	
+										),	*/
 										
 										
 								)
 							));
 						?>
 					</div>
-				</div>
+				</div>-->
 				<div class="row well">
 					<legend><span class="fa fa-bars"></span> <b>Admin Menu</b></legend>
 						<div class="col-md-12 ">
@@ -230,6 +268,7 @@ $reservationCheckcancelled = Yii::app()->createUrl( "admin/CheckCancelledReserva
 $reportsAdmin = Yii::app()->createUrl( "report/index" );
 $reservationEmailArrived = Yii::app()->createUrl( "admin/reservationEmailArrived" );
 $AllList = Yii::app()->createUrl( "admin/ReservationFullList" );
+$index = Yii::app()->createUrl( "admin/index" );
 
 $success = 'success';
 $warning = 'warning';
@@ -241,6 +280,47 @@ Yii::app()->clientScript->registerScript('dashboard', "
 		counter();
 		refresh();
 		gridRefresh();
+	$(document).ready(function() {
+	       		$('#reservation_grid table').attr('id', 'ac_grid');	
+ 		});	
+
+	   	$(function () {
+                        $('#ac_grid').DataTable({
+							'stateSave': true,
+							'ordering': true,
+							'responsive': true,
+							'iDisplayLength': 10,
+							'order': [[ 0, 'asc' ], [ 1, 'asc' ]]
+
+                        })
+                    })       
+	//var table = $('#ac_grid').DataTable();	
+	//setInterval( function () {
+    //table.ajax.reload(); // user paging is not reset on reload
+    // alert('yehey');
+	//}, 5000 );
+
+		$(document).on('click', '.reservation_search_btn', function(){
+				grid();
+				search();
+
+			});
+			
+			function grid()
+			{
+				$('#formReservation').submit();
+			}
+			
+		$('#formReservation').submit(function()
+			{
+				$('#reservation_grid').yiiGridView('update', {
+				type:'POST',
+				data: $(this).serialize()
+			});
+			return false;
+		});
+
+
 		
 			function refresh()
 			{
@@ -420,6 +500,7 @@ Yii::app()->clientScript->registerScript('dashboard', "
 
 		});
 		
+
 		
 
 		$(document).on('click', '#btn_cancel_reservation', function(){

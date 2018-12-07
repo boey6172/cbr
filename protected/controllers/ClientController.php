@@ -641,7 +641,7 @@ class ClientController extends Controller
 					$retMessage = $reservation->reservation_no;
 					$dateNow = date("Y-m-d h:i:sa");
 					$timeStamp = ((strtotime($reservation->reserved_date) - strtotime($dateNow) ));
-				 	ClientController::SendNotification( $timeStamp,$reservation->reservation_id );
+				 	//ClientController::SendNotification( $timeStamp,$reservation->reservation_id );
 					$user = new User();
 					$user = User::model()->findByPk($id);
 						

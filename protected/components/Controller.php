@@ -146,6 +146,42 @@ EOF;
 
         return $datepick;
     }
+    public static function datePickerAlldays( $id, $dateformat='', $text_fields ) {
+        $datepick = <<<EOF
+        <div class='input-group date' id='{$id}'>
+            {$text_fields}
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
+        </div>
+EOF;
+        Yii::app()->clientScript->registerScript("datetimepicker{$id}", "
+            $(function () {
+                            var currentDate = new Date();
+                            var curYear = currentDate.getFullYear();
+                            var curMonth = currentDate.getMonth();
+                            var curDay = currentDate.getDay();
+                            var minDate = getFormatDate(new Date(currentDate.setDate(currentDate.getDate())));
+                            var maxDate = getFormatDate(new Date(currentDate.setDate(currentDate.getDate())));
+                            //alert(maxDate);
+
+                 $('#{$id}').datetimepicker( {
+                                     format: '{$dateformat}',
+                                    //minDate: moment(minDate, 'MM/DD/YYYY') ,
+                                    //maxDate: moment(maxDate, 'MM/DD/YYYY')  ,
+                                    //disabledDates: [ moment('curYear (curMonth + 2) 3', 'MM/DD/YYYY')  ],
+                                    ignoreReadonly: true,
+                                    sideBySide: true ,
+                                });
+            });
+
+                    function getFormatDate(d){
+                        return d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear()
+                    }
+        ");
+
+        return $datepick;
+    }
 	
 	public static function Checkaccess() {
         // for fleet user dept only

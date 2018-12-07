@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/sb-admin-2.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/wizard.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css"/>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyABSSsbDOUfnTG2E_M8-6AnOMnAI1wDtU8&libraries=places'></script> -->
     <!-- <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyABSSsbDOUfnTG2E_M8-6AnOMnAI1wDtU8&libraries=places'></script> -->
@@ -167,7 +168,8 @@
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.validate.min.js"></script>
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/additional-methods.min.js"></script>
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/parsley.min.js"></script>
-
+<script src="<?php echo Yii::app()->request->baseUrl; ?>/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo Yii::app()->request->baseUrl; ?>/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 </body>
 </html>
 

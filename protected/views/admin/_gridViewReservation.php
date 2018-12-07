@@ -1,82 +1,88 @@
-<?php $this->widget('booster.widgets.TbExtendedGridView', array(
-    'id'=>'reservation-grid',
-    'headerOffset' => 40,
-    'type' => 'striped condensed bordered',
-    'responsiveTable' => true,
-    'dataProvider'=>$vm->reservation->today(),
-    'columns'=>array(
-        array(
-          'name' => 'Reservation Number',
-          'value' => '$data->reservation_no',
-          'sortable' => false,
-        ),
-        array(
-          'name' => 'Pick up Location',
-          'value' => '$data->pick_up_location',
-          'sortable' => false,
-        ),
-        array(
-          'name' => 'Dropoff Location',
-          'value' => '$data->drop_off_location',
-          'sortable' => false,
-        ),
-        array(
-          'name' => 'Passengers',
-          'value' => '$data->passengers',
-          'sortable' => false,
-        ),
-        array(
-          'name' => 'Reservation DateTime',
-          'value' => '$data->reserved_date',
-          'sortable' => false,
-        ),
-        array(
-          'name' => 'view',
-          'header' => 'Action',
-          'htmlOptions'=>array('style'=>'width: 133px'),
-          'value' => function($data){
-                $this->widget(
-                    'booster.widgets.TbButton',
-                    array(
-                        // 'label' => ($data->reservation_status == 0 ?  'Done' : 'View and Print'),
-                        'context' => 'primary',
-                        'icon' => 'fa fa-print',
-                        'buttonType' =>'link',
-                        'url'=> array('reservation/printticket', 'id'=>$data->reservation_id),
-                        'htmlOptions' => array(
-                            'class'=>($data->reservation_status == 0 ?  'btn-primary' : 'btn-primary'),
-                            'ref'=>$data->reservation_no,
-                            //'target'=>'_blank',
-                            'title'=>'update',
-                        ),
-                    )
-                );
-				 $this->widget(
-                    'booster.widgets.TbButton',
-                    array(
-                         // 'label' => ($data->reservation_status == 0 ?  'Cancelled Reservation' : 'Cancel Reservation'),
-                        'context' => 'Danger',
-                        'icon' => 'fa fa-close',
-                        'buttonType' =>'link',
-                        // 'url'=> array('reservation/printticket', 'id'=>$data->reservation_id),
-                        'htmlOptions' => array(
-							'id'=>'modal_cancel_reservation',
-                            'class'=>($data->reservation_status == 0 ?  'btn-danger disabled' : 'btn-primary'),
-                            'data'=>$data->reservation_id,
-                            //'target'=>'_blank',
-                            // 'title'=>'update',
-                        ),
-                    )
-                );
-				
-				
-				
 
-				
-				
-            },
-        ), 
+ <?php
+    $this->widget('booster.widgets.TbExtendedGridView', [
+        'id' => 'reservation_grid',
+        'type' => 'bordered condensed hover',
+        'template'=>'{items}',
+        'htmlOptions' => ['style'=>'width: 100%'],
+        'dataProvider' => $vm->reservation->today(),
+        'columns' => [
+             [
+                'name' => 'reservation_no',
+                'value' => '$data->reservation_no',
+                'header' => 'Reservation No.',
+                'sortable' => true,
+                'htmlOptions' => ['style'=>'width: 100px'],
+            ],
+            [
+              'name' => 'Pick up Location',
+              'value' => '$data->pick_up_location',
+              'header' => 'Pick up Location.',
+              'sortable' => true,
 
-    ),
-));
- ?>
+            ],
+            [
+              'name' => 'Dropoff Location',
+              'value' => '$data->drop_off_location',
+              'sortable' => true,
+            ],
+            [            
+              'name' => 'Passengers',
+              'value' => '$data->passengers',
+              'sortable' => true,
+            ],
+            [
+              'name' => 'Reservation DateTime',
+              'value' => '$data->reserved_date',
+              'sortable' => true,
+            ],
+            [
+              'name' => 'Reservation Status',
+              'value' => '$data->ReservationStatus->description',
+              'sortable' => true,
+            ],
+
+            [
+                'name' => 'View',
+                'header' => 'Action',
+                'htmlOptions' => ['style'=>'width: 103px'],
+                'value' => function($data) {
+                    $this->widget(
+                        'booster.widgets.TbButton', [
+                            'label' => 'Print',
+                            'context' => 'primary',
+                            'icon' => 'fa fa-print',
+                            'buttonType' =>'link',
+                            'size' => 'extra_small',
+                            'url'=> array('reservation/printticket', 'id'=>$data->reservation_id),
+                            'htmlOptions' => [
+                                'class' => ($data->reservation_status == 0 ?  'btn-primary' : 'btn-primary'),
+                                'ref' => $data->reservation_id,
+                                'target' => '_blank',
+                                'title' => 'Print',
+                            ],
+                        ]
+                    );
+                    $this->widget(
+                        'booster.widgets.TbButton', [
+                            'label' => 'Cancel',
+                            'context' => 'danger',
+                            'icon' => 'fa fa-close',
+                            'buttonType' =>'link',
+                            'size' => 'extra_small',
+                            'url'=> array('reservation/printticket', 'id'=>$data->reservation_id),
+                            'htmlOptions' => [
+                                'class' => ($data->reservation_status == 0 ?  'btn-danger disabled' : 'btn-primary' && $data->reservation_status == 4 ?  'btn-danger disabled' : 'btn-primary'),
+                                'ref' => $data->reservation_id,
+                                'target' => '_blank',
+                                'title' => 'Cancel',
+                            ],
+                        ]
+                    );
+
+
+                },
+            ],
+        ],
+    ]);
+?>
