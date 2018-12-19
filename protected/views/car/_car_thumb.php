@@ -2,6 +2,8 @@
   <div class="card">
     <span style="color: #E53935;"></span>
     <div class="card-image">
+      <button ref=<?php echo $data->car_id; ?> class="btn cus_btn btn_car_status <?php echo ($data->car_status == 1) ? 'btn-success' : 'btn-danger' ?>" style="position:absolute; right:0; z-index:10;"><i class="fa fa-circle-o"></i> <?php echo ($data->car_status == 1) ? 'ACTIVE' : 'IN ACTIVE' ?></button>
+      <span>
       <a href="#"><img class="card-background" height="130" width="200" src=<?php echo ($data->picture != '') ? $data->picture : "./images/car.jpg"; ?> ></a>
     </div>
     <div class="card-content">

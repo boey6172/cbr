@@ -14,7 +14,7 @@
     <span style="color: #E53935;"></span>
     <div class="card-image">
       <!-- <button ref=<?php echo $data->car_id; ?> class="btn cus_btn btn-primary car_sched_btn" style="position:absolute; right:0; z-index:10;"><i class="fa fa-calendar"></i></button> -->
-      <a href="#"><img class="card-background" height="130" width="200" src="<?php echo $data->picture; ?>"></a>
+      <a href="#"><img class="card-background" height="130" width="200" src=<?php echo ($data->picture != '') ? $data->picture : "./images/car.jpg"; ?> ></a>
     </div>
     <div class="card-content">
       <label class="title-detail"><?php echo $data->plate_no ?></span></label>

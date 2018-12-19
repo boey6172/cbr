@@ -27,10 +27,10 @@ class CarCodingCluster extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('car, coding', 'required'),
-			array('car, coding', 'numerical', 'integerOnly'=>true),
+			array('car, coding, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('cluster_id, car, coding', 'safe', 'on'=>'search'),
+			array('cluster_id, car, coding, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,6 +42,8 @@ class CarCodingCluster extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'Car'=>array(self::HAS_ONE, 'Car', array( 'car_id' => 'car' )),
+			'CodingType'=>array(self::HAS_ONE, 'CodingType', array( 'type_id' => 'coding' )),
 		);
 	}
 
@@ -54,6 +56,7 @@ class CarCodingCluster extends CActiveRecord
 			'cluster_id' => 'Cluster',
 			'car' => 'Car',
 			'coding' => 'Coding',
+			'status' => 'Status',
 		);
 	}
 
@@ -77,10 +80,25 @@ class CarCodingCluster extends CActiveRecord
 
 		$criteria->compare('cluster_id',$this->cluster_id);
 		$criteria->compare('car',$this->car);
-		$criteria->compare('coding',$this->coding);
+		$criteria->compare('coding',$this->coding,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+		));
+	}
+	public function searchList()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		//$criteria->compare('cluster_id',$this->cluster_id);
+		$criteria->compare('car',$this->car,true);
+		//$criteria->compare('coding',$this->coding,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=>false,
 		));
 	}
 

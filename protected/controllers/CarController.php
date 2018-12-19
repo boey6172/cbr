@@ -18,7 +18,9 @@ class CarController extends Controller
 					'admin',
 					'savecar',
                     'viewcar',
-					'updatecar',
+                    'updatecar',
+                    'carschedules',
+					'activate',
                 ),
 				'roles'=>array('rxAdmin'),
 			),
@@ -161,6 +163,35 @@ class CarController extends Controller
         ));
     }
 
+
+    public function actionCarSchedules()
+    {
+        $vm = (object) array();
+        $retVal = 'error';
+        $retMessage = 'Error';
+        $vm->carschedules = new CarCodingCluster('search');
+
+      
+
+        if($_POST['Car']['car_id'] != '')
+        {
+            $car = $_POST['Car']['car_id'];
+            $vm->carschedules->car = $car;
+        }
+
+
+        $retMessage = $this->renderPartial('_car_schedules_form', array(
+            'vm' => $vm,
+        ), true);
+
+        $this->renderPartial('/json/json_ret', array(
+            'retVal' => $retVal,
+            'retMessage' => $retMessage,
+        ));
+    }
+
+
+
     public function actionUpdateCar()
     {
         $alert = (object) array();
@@ -206,6 +237,52 @@ class CarController extends Controller
         $this->renderPartial('/json/json_ret', array(
             'retVal' => $retVal,
             'retMessage' => $retMessage,
+        ));
+    }
+    public function actionActivate()
+    {   
+        $retVal = 'error';
+        $retMessage = 'Error';
+
+        if(isset($_POST['user']))
+        {
+            $id = $_POST['user'];
+
+            $findSchedule = CarCodingCluster::model()->findByPk($id);
+            
+            if($findSchedule->status == 0)
+            {
+                $findSchedule->status = 1;
+                // unset($findSchedule->coding);
+                // unset($findSchedule->car);
+                if($findSchedule->save())
+                {
+                    // print_r($findSchedule)
+                    $retVal = 'success';
+                    $retMessage = 'Successfully Saved';
+                }
+            }
+            else
+            {
+                // unset($findSchedule->coding);
+                // unset($findSchedule->car);
+                $findSchedule->status = 0;
+                if($findSchedule->save())
+                {
+                    $retVal = 'success';
+                    $retMessage = 'Successfully Saved';
+                }
+            }
+
+            // if(isset($findSchedule))
+            // {
+            //     $retMessage = $findSchedule->attributes;
+            // }
+        }
+
+        $this->renderPartial('/json/json_ret', array(
+            'retVal' => $retVal,
+            'retMessage' =>$retMessage,
         ));
     }
 }

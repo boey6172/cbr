@@ -157,7 +157,8 @@ class ClientController extends Controller
 		$retVal = 'error';
 		$retMessage = 'Error';
 		$dateToday =  date("Y-m-d");
-		
+		$status = 1;
+
 		if(isset($_POST['Reservation']))
 		{		
 			$reservation = new Reservation('search');
@@ -165,7 +166,7 @@ class ClientController extends Controller
 			
 			$reseveredDate=date('Y-m-d', strtotime($reservation->reserved_date));
 			
-			if($reservation->reservation_type == 1 || $reservation->reservation_type == 2 || $reservation->reservation_type == 3)
+			if($reservation->reservation_type == 1 || $reservation->reservation_type == 2)
 			{
 			
 
@@ -240,7 +241,7 @@ class ClientController extends Controller
 				$todaysCars = CarCodingCluster::model()->findAll(array(
 					'select' => 'car',
 					'distinct'=>true,
-					'condition'=>'coding = ' . $todayCoding,
+					'condition'=>'coding = ' . $todayCoding . ' AND ' . 'status= ' . $status ,
 				));
 
 				foreach($todaysCars as $tc)
@@ -336,7 +337,8 @@ class ClientController extends Controller
 				$todaysCars = CarCodingCluster::model()->findAll(array(
 					'select' => 'car',
 					'distinct'=>true,
-					'condition'=>'coding = ' . $todayCoding,
+					'condition'=>'coding = ' . $todayCoding . ' AND ' . 'status= ' . $status ,
+
 				));
 
 				foreach($todaysCars as $tc)
@@ -641,7 +643,7 @@ class ClientController extends Controller
 					$retMessage = $reservation->reservation_no;
 					$dateNow = date("Y-m-d h:i:sa");
 					$timeStamp = ((strtotime($reservation->reserved_date) - strtotime($dateNow) ));
-				 	//ClientController::SendNotification( $timeStamp,$reservation->reservation_id );
+				 	ClientController::SendNotification( $timeStamp,$reservation->reservation_id );
 					$user = new User();
 					$user = User::model()->findByPk($id);
 						

@@ -86,7 +86,7 @@ $form = $this->beginWidget(
 			));
 		?>
 		<?php
-		$driver = CHtml::listData( Driver::model()->findAll(array()), 'id', 'full_name'); ?>
+		$driver = CHtml::listData( Driver::model()->findAllByAttributes(array('driver_status'=>1)), 'id', 'full_name'); ?>
 
 		<?php echo $form->select2Group(
 			$vm->car,

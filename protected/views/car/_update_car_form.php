@@ -7,6 +7,9 @@ $form = $this->beginWidget(
 	)
 );
 ?>
+	<div style="float:right !important; position:relative; bottom:32px;">
+         <button type="button" class="btn cus_btn btn-success btnSchedules" ref=<?php echo $vm->car->car_id; ?> style="" name="button">Schedules <span class="fa fa-calendar"></span></button>
+    </div>
 <div class="row">
 	<div class="col-md-12">
 		<div id="update_alert_errors"></div>
@@ -85,7 +88,7 @@ $form = $this->beginWidget(
 		?>
 	
 		<?php
-		$driver = CHtml::listData( Driver::model()->findAll(array()), 'id', 'full_name'); ?>
+		$driver = CHtml::listData( Driver::model()->findAllByAttributes(array('driver_status'=>1)), 'id', 'full_name'); ?>
 
 		<?php echo $form->select2Group(
 			$vm->car,
@@ -105,6 +108,7 @@ $form = $this->beginWidget(
 		);?>
 	
 	</div>
+
 
 <?php
 	echo $form->hiddenField($vm->car, 'car_id', array());

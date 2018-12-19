@@ -16,17 +16,17 @@
 <hr>
 
 <?php
-	echo CHtml::openTag('div', array('class' => 'row-fluid'));
-	$this->widget(
-	    'bootstrap.widgets.TbThumbnails',
-	    array(
-	    	'id' => 'car_thumbnails',
-	        'dataProvider' => $vm->car->search(),
-	        'template' => "{items}\n{pager}",
-	        'itemView' => '_car_thumb',
-	    )
-	);
-	echo CHtml::closeTag('div');
+  echo CHtml::openTag('div', array('class' => 'row-fluid'));
+  $this->widget(
+      'bootstrap.widgets.TbThumbnails',
+      array(
+        'id' => 'car_thumbnails',
+          'dataProvider' => $vm->car->search(),
+          'template' => "{items}\n{pager}",
+          'itemView' => '_car_thumb',
+      )
+  );
+  echo CHtml::closeTag('div');
 ?>
 
 <!-- MODALS  -->
@@ -41,6 +41,21 @@
         ,
         'style' => '
           width : 65%;
+        ',
+    ));
+?>
+
+<?php
+    echo $this->alenaModal( 'modalCarSchedules', array(
+        'title' => "<span class='fa fa-car fa-lg'></span>&nbsp;<span class='modalTitle'>Car Schedules</span>",
+        'body' => '',
+/*        'footer' =>
+          CHtml::button('Update', array("id" => "btn_update_car", "class" => "btn btn-primary")) .
+          ' ' .
+          CHtml::button('Close', array("class" => "btn", "data-dismiss"=>"modal"))
+        ,*/
+        'style' => '
+          width : 40%;
         ',
     ));
 ?>
@@ -68,6 +83,8 @@
 $save_car = Yii::app()->createUrl( "car/savecar" );
 $update_car = Yii::app()->createUrl( "car/updatecar" );
 $view_car = Yii::app()->createUrl( "car/viewcar" );
+$car_schedule = Yii::app()->createUrl( "car/carschedules" );
+$activate_schedule = Yii::app()->createUrl( "car/activate" );
 $success = 'success';
 $error = 'error';
 
@@ -148,6 +165,32 @@ Yii::app()->clientScript->registerScript('driver', "
     })
   }
 
+  $(document).on('click', '.btnSchedules', function(){
+    var id = $(this).attr('ref');  
+  
+    scheduleCar(id);
+  });
+
+  function scheduleCar(id)
+  {
+    $.ajax({
+      type: 'POST',
+      url: '{$car_schedule}',
+      data: {
+        'Car[car_id]':id,
+      },
+      dataType:'json',
+      success: function(data){
+        var json = data;
+
+        $('#modalCarSchedules .modal-body').html(json.retMessage);
+        $('#modalCarSchedules').modal('show');
+      }
+    })
+  }
+
+
+
   $(document).on('change','#file_update',function() {
     var preview = document.querySelector('#profile_pic_update');
     var file    = document.querySelector('#file_update').files[0];
@@ -204,6 +247,38 @@ Yii::app()->clientScript->registerScript('driver', "
       $('#search_car_form').submit();
     }
   });
+
+  $(document).on('click', '.activate_schedule_btn', function(){
+    var id = $(this).attr('ref');
+    activate(id);
+    $('#modalCarSchedules').modal('hide');
+  });
+
+
+
+  function activate(id)
+  {
+  $.ajax({
+          type: 'POST',
+          url: '{$activate_schedule}',
+          data: {'user':id},
+          dataType:'json',
+          success: function(data){
+              var json = data;
+      
+      if(json.retVal == '{$success}')
+            {
+              $.notify(json.retMessage, json.retVal);
+            }
+            else if(json.retVal == '{$error}')
+            {
+                $.notify(json.retMessage, json.retVal);
+            }
+      
+    }
+  })
+    
+  }
 
 ");
 
