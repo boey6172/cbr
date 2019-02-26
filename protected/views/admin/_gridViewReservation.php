@@ -41,6 +41,11 @@
               'value' => '$data->ReservationStatus->description',
               'sortable' => true,
             ],
+            [
+              'name' => 'Car',
+              'value' => '$data->getFullCarDetails()',
+              'sortable' => true,
+            ],
 
             [
                 'name' => 'View',

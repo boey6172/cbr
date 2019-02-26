@@ -290,7 +290,7 @@ Yii::app()->clientScript->registerScript('dashboard', "
 							'ordering': true,
 							'responsive': true,
 							'iDisplayLength': 10,
-							'order': [[ 0, 'asc' ], [ 1, 'asc' ]]
+							'order': [[ 4, 'desc' ]]
 
                         })
                     })       

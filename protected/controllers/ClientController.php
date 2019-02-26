@@ -166,7 +166,7 @@ class ClientController extends Controller
 			
 			$reseveredDate=date('Y-m-d', strtotime($reservation->reserved_date));
 			
-			if($reservation->reservation_type == 1 || $reservation->reservation_type == 2)
+			if($reservation->reservation_type == 1 || $reservation->reservation_type == 2 || $reservation->reservation_type == 3)
 			{
 			
 
