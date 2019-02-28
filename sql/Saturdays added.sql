@@ -1,0 +1,2 @@
+INSERT INTO `car_coding_cluster` (`cluster_id`, `car`, `coding`, `status`) VALUES (NULL, '1', '6', '1'), (NULL, '2', '6', '1'), (NULL, '3', '6', '1'), (NULL, '4', '6', '1'), (NULL, '5', '6', '1'), (NULL, '6', '6', '1'), (NULL, '7', '6', '1'), (NULL, '8', '6', '1'), (NULL, '9', '6', '1'), (NULL, '10', '6', '1'),(NULL, '11', '6', '1');
+INSERT INTO `lib_coding_type` (`type_id`, `description`) VALUES ('6', 'FRIDAY ( No Coding)');
